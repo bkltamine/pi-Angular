@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,23 +7,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public name;
-  public password;
-  constructor(
-    private router: Router
-  ) { }
+
+    loginForm: FormGroup;
+    submitted = false;
+
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-  }
-  login() {
+    this.loginForm = this.formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+}
 
-    if (this.name === 'user' && this.password === "user") {
-      this.router.navigateByUrl('/user');
+// convenience getter for easy access to form fields
+    get f() { return this.loginForm.controls; }
 
+    onSubmit() {
+        this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.loginForm.invalid) {
+            return;
+        }
+
+        alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
     }
-    if (this.name === 'admin' && this.password === "admin") {
-      this.router.navigateByUrl('/admin');
 
-    }
-  }
+
 }
