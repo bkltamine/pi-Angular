@@ -1,175 +1,167 @@
-(function() {
-
-	function init(item) {
-
-		var items = item.querySelectorAll('li'),
-    current = 0,
-    autoUpdate = true,
-    timeTrans = 4000;
-
-    var nav = document.createElement('nav');
-    
-    nav.className = 'nav_arrows';
-    
-    var prevbtn = document.createElement('button');
-    
-		prevbtn.className = 'previous';
-		prevbtn.setAttribute('aria-label', 'Prev');
-
-    var nextbtn = document.createElement('button');
-    
-		nextbtn.className = 'next';
-		nextbtn.setAttribute('aria-label', 'Next');
-
-    var counter = document.createElement('div');
-    
-		counter.className = 'counter';
-		counter.innerHTML = "<span>1</span><span>" + items.length + "</span>";
-
-		if (items.length > 1) {
-
-			nav.appendChild(prevbtn);
-			nav.appendChild(counter);
-			nav.appendChild(nextbtn);
-      item.appendChild(nav);
-      
+$(document).ready(function() {
+	$("#myCarousel").on("slide.bs.carousel", function(e) {
+	  var $e = $(e.relatedTarget);
+	  var idx = $e.index();
+	  var itemsPerSlide = 3;
+	  var totalItems = $("#myCarousel .carousel-item").length;
+  
+	  if (idx >= totalItems - (itemsPerSlide - 1)) {
+		var it = itemsPerSlide - (totalItems - idx);
+		for (var i = 0; i < it; i++) {
+		  // añade cards al final
+		  if (e.direction == "left") {
+			$("#myCarousel .carousel-item")
+			  .eq(i)
+			  .appendTo("#myCarousel .carousel-inner");
+		  } else {
+			$("#myCarousel .carousel-item")
+			  .eq(0)
+			  .appendTo($(this).find(".carousel-inner"));
+		  }
 		}
-
-    items[current].className = "current";
-    
-		if (items.length > 1) {
-      
-      items[items.length-1].className = "previous--slide";
-    
-    }
-
-		var navigate = function(dir) {
-
-			items[current].className = "";
-
-			if (dir === 'right') {
-
-        current = current < items.length-1 ? current + 1 : 0;
-        
-			} else {
-
-        current = current > 0 ? current - 1 : items.length-1;
-        
-			}
-
-			var nextCurrent = current < items.length-1 ? current + 1 : 0,
-			prevCurrent = current > 0 ? current - 1 : items.length-1;
-
-			items[current].className = "current";
-			items[prevCurrent].className = "previous--slide";
-			items[nextCurrent].className = "";
-
-      counter.firstChild.textContent = current + 1;
-      
-		}
-
-		item.addEventListener('mouseenter', function() {
-
-      autoUpdate = false;
-      
-		});
-
-		item.addEventListener('mouseleave', function() {
-
-      autoUpdate = true;
-      
-		});
-
-		setInterval(function() {
-
-      if (autoUpdate) navigate('right');
-      
-		},timeTrans);
-
-		prevbtn.addEventListener('click', function() {
-
-      navigate('left');
-      
-		});
-
-		nextbtn.addEventListener('click', function() {
-
-      navigate('right');
-      
-    });
-    
-		document.addEventListener('keydown', function(ev) {
-
-      var keyCode = ev.keyCode || ev.which;
-      
-			switch (keyCode) {
-        
-				case 37:
-
-					navigate('left');
-          break;
-          
-				case 39:
-          
-					navigate('right');
-          break;
-          
-      }
-      
-		});
-
-		item.addEventListener('touchstart', handleTouchStart, false); 
-    item.addEventListener('touchmove', handleTouchMove, false);
-    
-		var x_Coordination = null;
-    var y_Coordination = null;
-    
-		function handleTouchStart(evt) {
-
-			x_Coordination = evt.touches[0].clientX;
-      y_Coordination = evt.touches[0].clientY;
-      
-		};
-		function handleTouchMove(evt) {
-
-			if ( ! x_Coordination || ! y_Coordination ) {
-
-        return;
-        
-			}
-
-			var x_Coordination_Up = evt.touches[0].clientX;
-			var y_Coordination_Up = evt.touches[0].clientY;
-
-			var x_Coordination_Different = x_Coordination - x_Coordination_Up;
-			var y_Coordination_Different = y_Coordination - y_Coordination_Up;
-
-			if ( Math.abs( x_Coordination_Different ) > Math.abs( y_Coordination_Different ) ) {
-        
-				if ( x_Coordination_Different > 0 ) {
-          
-          navigate('right');
-          
-				} else {
-
-          navigate('left');
-          
-        }
-        
-      } 
-      
-			x_Coordination = null;
-      y_Coordination = null;
-      
-		};
-
-
-	}
-
-	[].slice.call(document.querySelectorAll('.shop--slider')).forEach( function(item) {
-
-    init(item);
-    
+	  }
 	});
+  });
+  
+  
+  $(document).ready(function() {
+	$("#myCarousel1").on("slide.bs.carousel", function(e) {
+	  var $e = $(e.relatedTarget);
+	  var idx = $e.index();
+	  var itemsPerSlide = 3;
+	  var totalItems = $("#myCarousel1 .carousel-item").length;
+  
+	  if (idx >= totalItems - (itemsPerSlide - 1)) {
+		var it = itemsPerSlide - (totalItems - idx);
+  
+		for (var i = 0; i < it; i++) {   
+		  // append slides to end
+		  if (e.direction == "left") {
+			$("#myCarousel1 .carousel-item")
+			  .eq(i)
+			  .appendTo("#myCarousel1 .carousel-inner");
+		  } else {
+			$(".carousel-item")
+			  .eq(0)
+			  .appendTo($(this).find(".carousel-inner"));
+		  }
+		  
+		}
+	  }
+	});
+  });
+  $(document).ready(function() {
+	$().ready(function() {
+	  $sidebar = $('.sidebar');
+	  $navbar = $('.navbar');
+	  $main_panel = $('.main-panel');
 
-})();
+	  $full_page = $('.full-page');
+
+	  $sidebar_responsive = $('body > .navbar-collapse');
+	  sidebar_mini_active = true;
+	  white_color = false;
+
+	  window_width = $(window).width();
+
+	  fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+	  $('.fixed-plugin a').click(function(event) {
+		if ($(this).hasClass('switch-trigger')) {
+		  if (event.stopPropagation) {
+			event.stopPropagation();
+		  } else if (window.event) {
+			window.event.cancelBubble = true;
+		  }
+		}
+	  });
+
+	  $('.fixed-plugin .background-color span').click(function() {
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+
+		var new_color = $(this).data('color');
+
+		if ($sidebar.length != 0) {
+		  $sidebar.attr('data', new_color);
+		}
+
+		if ($main_panel.length != 0) {
+		  $main_panel.attr('data', new_color);
+		}
+
+		if ($full_page.length != 0) {
+		  $full_page.attr('filter-color', new_color);
+		}
+
+		if ($sidebar_responsive.length != 0) {
+		  $sidebar_responsive.attr('data', new_color);
+		}
+	  });
+
+	  $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+		var $btn = $(this);
+
+		if (sidebar_mini_active == true) {
+		  $('body').removeClass('sidebar-mini');
+		  sidebar_mini_active = false;
+		  blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+		} else {
+		  $('body').addClass('sidebar-mini');
+		  sidebar_mini_active = true;
+		  blackDashboard.showSidebarMessage('Sidebar mini activated...');
+		}
+
+		// we simulate the window Resize so the charts will get updated in realtime.
+		var simulateWindowResize = setInterval(function() {
+		  window.dispatchEvent(new Event('resize'));
+		}, 180);
+
+		// we stop the simulation of Window Resize after the animations are completed
+		setTimeout(function() {
+		  clearInterval(simulateWindowResize);
+		}, 1000);
+	  });
+
+	  $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+		var $btn = $(this);
+
+		if (white_color == true) {
+
+		  $('body').addClass('change-background');
+		  setTimeout(function() {
+			$('body').removeClass('change-background');
+			$('body').removeClass('white-content');
+		  }, 900);
+		  white_color = false;
+		} else {
+
+		  $('body').addClass('change-background');
+		  setTimeout(function() {
+			$('body').removeClass('change-background');
+			$('body').addClass('white-content');
+		  }, 900);
+
+		  white_color = true;
+		}
+
+
+	  });
+
+	  $('.light-badge').click(function() {
+		$('body').addClass('white-content');
+	  });
+
+	  $('.dark-badge').click(function() {
+		$('body').removeClass('white-content');
+	  });
+	});
+  });
+
+  $(document).ready(function() {
+	// Javascript method's body can be found in assets/js/demos.js
+	demo.initDashboardPageCharts();
+
+  });

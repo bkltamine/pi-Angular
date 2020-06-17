@@ -9,9 +9,15 @@ import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { RegisterCustomerComponent } from './auth/register-customer/register-customer.component';
 import { NpnSliderModule } from 'npn-slider';
-import { LocationComponent } from './location/location.component';
+import { LocationComponent } from './features/location/location.component';
+import { SliderComponent } from './home/slider/slider.component';
+import { HttpClientModule } from "@angular/common/http";
+import { EquipementComponent } from './features/equipement/equipement.component';
+import { VisiteComponent } from './features/visite/visite.component';
+import { EcoleComponent } from './features/ecole/ecole.component';
+import { CompetitionComponent } from './features/competition/competition.component';
+import { AdminComponent } from './admin/admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,8 +26,13 @@ import { LocationComponent } from './location/location.component';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    RegisterCustomerComponent,
-    LocationComponent
+    LocationComponent,
+    SliderComponent,
+    EquipementComponent,
+    VisiteComponent,
+    EcoleComponent,
+    CompetitionComponent,
+    AdminComponent
 
   ],
   imports: [
@@ -29,7 +40,8 @@ import { LocationComponent } from './location/location.component';
     AppRoutingModule,
     FormsModule,
     NpnSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
